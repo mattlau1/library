@@ -21,9 +21,6 @@ function Book(title, author, page, read) {
 function addBookToLibrary(title, author, page, read) {
     // do stuff here
     const book = new Book(title, author, page, read);
-    
-    
-    myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
     myLibrary.push(book);
     saveLocal();
 }
