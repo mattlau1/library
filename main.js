@@ -1,5 +1,14 @@
-let myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
+let myLibrary = [];
 
+function saveLocal() {
+    localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+}
+
+function restoreLocal() {
+    myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
+    if (myLibrary === null) myLibrary = [];
+    displayBooks();
+}
 
 function Book(title, author, page, read) {
     // the constructor...
@@ -12,8 +21,11 @@ function Book(title, author, page, read) {
 function addBookToLibrary(title, author, page, read) {
     // do stuff here
     const book = new Book(title, author, page, read);
+    
+    
+    myLibrary = JSON.parse(localStorage.getItem("myLibrary"));
     myLibrary.push(book);
-    localStorage.setItem("myLibrary", JSON.stringify(myLibrary));
+    saveLocal();
 }
 
 function removeBooks() {
@@ -21,11 +33,13 @@ function removeBooks() {
     document.querySelectorAll('#grid-item').forEach(item => {
         container.removeChild(item);
     })
+    saveLocal();
 }
 
 function displayBooks() {
     // remove books from website and re display array
     // myLibrary = localStorage.getItem('myLibrary');
+    
     for (let i = 0; i < myLibrary.length; i++) {
         const container = document.querySelector('#grid-container');
 
@@ -122,15 +136,12 @@ function removeBookButton() {
 }
 
 function testFunction() {
-    addBookToLibrary("harry pothead", "jk lmao", "24", true)
-    addBookToLibrary("Harry Pothead and the Philosopher's Stone 2", "jk lmao123 JK ROLLINGS", "243232", true)
-    addBookToLibrary("harry 3", "jk lmao", "4444", true)
-    addBookToLibrary("harry 4", "jk lmao", "24", true)
+    addBookToLibrary("Example Book", "Matthew Lau", "1000", true)
     displayBooks()
 }
 
-
 addBookButton();
 removeBookButton();
-displayBooks();
+restoreLocal();
+
 
